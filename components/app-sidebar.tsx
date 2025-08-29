@@ -10,10 +10,29 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { FileText, Folder, FolderArchive, FolderPlus, icons, Search, StarIcon, Trash2Icon } from "lucide-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import {
+  FileText,
+  Folder,
+  FolderArchive,
+  FolderPlus,
+  Plus,
+  Search,
+  StarIcon,
+  Trash2Icon,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import UserSidebar from "./user-sidebar";
+import { ModeToggle } from "./toggle-theme";
 
 const recents = [
   {
@@ -59,7 +78,7 @@ const folders = [
     url: "#",
     icon: Folder,
   },
-]
+];
 
 const mores = [
   {
@@ -89,6 +108,10 @@ export function AppSidebar() {
             <Search />
           </Button>
         </div>
+        <Button className="mt-3 w-full">
+          <Plus />
+          New Note
+        </Button>
       </SidebarHeader>
 
       <SidebarContent>
@@ -159,7 +182,22 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <div className="px-4 py-3 flex items-center justify-between">
+          <SignedOut>
+            <SignInButton />
+            <SignUpButton>
+              <button className="bg-primary text-ceramic-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                Sign Up
+              </button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+           <UserSidebar/>
+           <ModeToggle/>
+          </SignedIn>
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }
