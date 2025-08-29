@@ -1,3 +1,4 @@
+"use client";
 import {
   Sidebar,
   SidebarContent,
@@ -10,18 +11,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import {
   FileText,
   Folder,
   FolderArchive,
+  FolderOpen,
   FolderPlus,
   Plus,
   Search,
@@ -29,10 +24,11 @@ import {
   Trash2Icon,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ModeToggle } from "./toggle-theme";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import UserSidebar from "./user-sidebar";
-import { ModeToggle } from "./toggle-theme";
 
 const recents = [
   {
@@ -55,27 +51,27 @@ const recents = [
 const folders = [
   {
     title: "Personal",
-    url: "#",
+    url: "/personal",
     icon: Folder,
   },
   {
     title: "Work",
-    url: "#",
+    url: "/work",
     icon: Folder,
   },
   {
     title: "Travel",
-    url: "#",
+    url: "/travel",
     icon: Folder,
   },
   {
     title: "Events",
-    url: "#",
+    url: "/events",
     icon: Folder,
   },
   {
     title: "Finances",
-    url: "#",
+    url: "/finances",
     icon: Folder,
   },
 ];
@@ -83,22 +79,23 @@ const folders = [
 const mores = [
   {
     title: "Favorites",
-    url: "#",
+    url: "/favorites",
     icon: StarIcon,
   },
   {
     title: "Trash",
-    url: "#",
+    url: "/trash",
     icon: Trash2Icon,
   },
   {
     title: "Archive Notes",
-    url: "#",
+    url: "/archive",
     icon: FolderArchive,
   },
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-3">
@@ -148,16 +145,20 @@ export function AppSidebar() {
 
           <SidebarGroupContent>
             <SidebarMenu>
-              {folders.map((recent) => (
-                <SidebarMenuItem key={recent.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={recent.url}>
-                      <recent.icon />
-                      <span>{recent.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {folders.map((folder) => {
+                const menuActive = folder.url === pathname;
+                const Icon = menuActive ? FolderOpen : folder.icon;
+                return (
+                  <SidebarMenuItem key={folder.title}>
+                    <SidebarMenuButton isActive={menuActive} asChild>
+                      <Link href={folder.url}>
+                        <Icon />
+                        <span>{folder.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -193,8 +194,8 @@ export function AppSidebar() {
             </SignUpButton>
           </SignedOut>
           <SignedIn>
-           <UserSidebar/>
-           <ModeToggle/>
+            <UserSidebar />
+            <ModeToggle />
           </SignedIn>
         </div>
       </SidebarFooter>
