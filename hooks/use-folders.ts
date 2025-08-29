@@ -21,7 +21,7 @@ const createFolder = async (payload : Folder) => {
     }
 }
 
-const deleteFolder = async (id : string) => {
+const deleteFolder = async (id : number) => {
     try {
         const response = await api.delete(`/folders/${id}`);
         return response.data;
@@ -49,11 +49,11 @@ export const useCreateFolder = () =>{
     })
 }
 
-export const useDeleteFolder = (id : string) => {
+export const useDeleteFolder = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: () => deleteFolder(id),
-        onSettled: () => {
+        mutationFn: (id: number) => deleteFolder(id),
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['folders'] })
           }
     })

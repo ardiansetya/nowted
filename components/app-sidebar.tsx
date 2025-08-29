@@ -11,6 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useDeleteFolder, useGetAllFolders } from "@/hooks/use-folders";
+import { Folder as FolderType } from "@/types/folders";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import {
   FileText,
@@ -24,13 +26,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ModalAddFolder from "./modal-add-folder";
 import { ModeToggle } from "./toggle-theme";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import UserSidebar from "./user-sidebar";
-import {  useGetAllFolders } from "@/hooks/use-folders";
-import { Folder as FolderType } from "@/types/folders";
-import ModalAddFolder from "./modal-add-folder";
+import AlertDelete from "./alert-delete";
 const recents = [
   {
     title: "Reflections on the month of june",
@@ -48,7 +49,6 @@ const recents = [
     icon: FileText,
   },
 ];
-
 
 const mores = [
   {
@@ -69,8 +69,8 @@ const mores = [
 ];
 
 export function AppSidebar() {
+  const { data: foldersData } = useGetAllFolders();
 
-const { data: foldersData, isLoading } = useGetAllFolders();
 
   const pathname = usePathname();
   const pathnameEncoded = decodeURIComponent(pathname);
@@ -114,10 +114,10 @@ const { data: foldersData, isLoading } = useGetAllFolders();
           <SidebarGroupLabel>
             <div className="flex w-full items-center justify-between">
               <h3>Folders</h3>
-              <ModalAddFolder/>
+              <ModalAddFolder />
             </div>
           </SidebarGroupLabel>
-          <Separator className="my-1" />
+          <Separator className="mt-2 mb-1" />
 
           <SidebarGroupContent>
             <SidebarMenu>
@@ -132,6 +132,9 @@ const { data: foldersData, isLoading } = useGetAllFolders();
                       <Link href={`${folder.name.toLocaleLowerCase()}`}>
                         <Icon />
                         <span>{folder.name}</span>
+                        <div className="ml-auto">
+                         <AlertDelete productId={folder.id} />
+                        </div>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
