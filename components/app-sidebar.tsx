@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useDeleteFolder, useGetAllFolders } from "@/hooks/use-folders";
+import {  useGetAllFolders } from "@/hooks/use-folders";
 import { Folder as FolderType } from "@/types/folders";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import {
@@ -176,8 +176,8 @@ export function AppSidebar() {
           </SignedOut>
           <SignedIn>
             <UserSidebar />
-            <ModeToggle />
           </SignedIn>
+            <ModeToggle />
         </div>
       </SidebarFooter>
     </Sidebar>
