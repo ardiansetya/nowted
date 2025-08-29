@@ -17,7 +17,6 @@ import {
   Folder,
   FolderArchive,
   FolderOpen,
-  FolderPlus,
   Plus,
   Search,
   StarIcon,
@@ -29,7 +28,9 @@ import { ModeToggle } from "./toggle-theme";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import UserSidebar from "./user-sidebar";
-
+import {  useGetAllFolders } from "@/hooks/use-folders";
+import { Folder as FolderType } from "@/types/folders";
+import ModalAddFolder from "./modal-add-folder";
 const recents = [
   {
     title: "Reflections on the month of june",
@@ -48,33 +49,6 @@ const recents = [
   },
 ];
 
-const folders = [
-  {
-    title: "Personal",
-    url: "/personal",
-    icon: Folder,
-  },
-  {
-    title: "Work",
-    url: "/work",
-    icon: Folder,
-  },
-  {
-    title: "Travel",
-    url: "/travel",
-    icon: Folder,
-  },
-  {
-    title: "Events",
-    url: "/events",
-    icon: Folder,
-  },
-  {
-    title: "Finances",
-    url: "/finances",
-    icon: Folder,
-  },
-];
 
 const mores = [
   {
@@ -95,7 +69,11 @@ const mores = [
 ];
 
 export function AppSidebar() {
+
+const { data: foldersData, isLoading } = useGetAllFolders();
+
   const pathname = usePathname();
+  const pathnameEncoded = decodeURIComponent(pathname);
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-3">
@@ -136,24 +114,24 @@ export function AppSidebar() {
           <SidebarGroupLabel>
             <div className="flex w-full items-center justify-between">
               <h3>Folders</h3>
-              <Button variant="ghost" size="icon">
-                <FolderPlus />
-              </Button>
+              <ModalAddFolder/>
             </div>
           </SidebarGroupLabel>
           <Separator className="my-1" />
 
           <SidebarGroupContent>
             <SidebarMenu>
-              {folders.map((folder) => {
-                const menuActive = folder.url === pathname;
-                const Icon = menuActive ? FolderOpen : folder.icon;
+              {foldersData?.map((folder: FolderType) => {
+                const menuActive =
+                  folder.name.toLocaleLowerCase() ===
+                  pathnameEncoded.split("/")[1];
+                const Icon = menuActive ? FolderOpen : Folder;
                 return (
-                  <SidebarMenuItem key={folder.title}>
+                  <SidebarMenuItem key={folder.name}>
                     <SidebarMenuButton isActive={menuActive} asChild>
-                      <Link href={folder.url}>
+                      <Link href={`${folder.name.toLocaleLowerCase()}`}>
                         <Icon />
-                        <span>{folder.title}</span>
+                        <span>{folder.name}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -188,7 +166,7 @@ export function AppSidebar() {
           <SignedOut>
             <SignInButton />
             <SignUpButton>
-              <button className="bg-primary text-ceramic-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+              <button className="bg-primary text-primary-foreground rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
                 Sign Up
               </button>
             </SignUpButton>
