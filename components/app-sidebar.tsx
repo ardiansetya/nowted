@@ -32,6 +32,7 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import UserSidebar from "./user-sidebar";
 import AlertDelete from "./alert-delete";
+import ModalAddNote from "./add-note-modal";
 const recents = [
   {
     title: "Reflections on the month of june",
@@ -74,6 +75,8 @@ export function AppSidebar() {
 
   const pathname = usePathname();
   const pathnameEncoded = decodeURIComponent(pathname);
+
+  
   return (
     <Sidebar>
       <SidebarHeader className="px-4 py-3">
@@ -83,10 +86,7 @@ export function AppSidebar() {
             <Search />
           </Button>
         </div>
-        <Button className="mt-3 w-full">
-          <Plus />
-          New Note
-        </Button>
+       <ModalAddNote/>
       </SidebarHeader>
 
       <SidebarContent>
@@ -133,7 +133,7 @@ export function AppSidebar() {
                         <Icon />
                         <span>{folder.name}</span>
                         <div className="ml-auto">
-                         <AlertDelete productId={folder.id} />
+                         <AlertDelete folderId={folder.id} />
                         </div>
                       </Link>
                     </SidebarMenuButton>

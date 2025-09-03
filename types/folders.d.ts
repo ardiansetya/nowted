@@ -1,4 +1,4 @@
 export type Folder = {
-    id: number;
+    id: string;
     name: string;
 }

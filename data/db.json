@@ -1,36 +1,50 @@
 {
   "folders": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Personal"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Work"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Penting"
+    },
+    {
+      "id": "56d4",
+      "name": "mbuh"
     }
   ],
   "notes": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Note 1",
       "content": "bla bla bla",
-      "folderId": 1
+      "folderId": "1",
+      "createdAt": "9/3/2025"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Note 2",
       "content": "bli bli bli",
-      "folderId": 2
+      "folderId": "2",
+      "createdAt": "9/3/2025"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Note 3",
       "content": "blu blu blu",
-      "folderId": 1
+      "folderId": "1",
+      "createdAt": "9/3/2025"
+    },
+    {
+      "id": "6446",
+      "title": "asdasd",
+      "content": "Create Your Content",
+      "folderId": "1",
+      "createdAt": "2025-09-03T14:04:38.159Z"
     }
   ]
 }

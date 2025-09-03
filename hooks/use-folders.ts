@@ -21,7 +21,7 @@ const createFolder = async (payload : Folder) => {
     }
 }
 
-const deleteFolder = async (id : number) => {
+const deleteFolder = async (id : string) => {
     try {
         const response = await api.delete(`/folders/${id}`);
         return response.data;
@@ -30,7 +30,7 @@ const deleteFolder = async (id : number) => {
     }
 }
 
-const fetchFolderById = async (id : number) => {
+const fetchFolderById = async (id : string) => {
     try {
         const response = await api.get<Folder>(`/folders/${id}`);
         return response.data
@@ -40,6 +40,9 @@ const fetchFolderById = async (id : number) => {
     }
 }
 
+
+// TANSTACK QUERY
+
 export const useGetAllFolders = () => {
     return useQuery({
         queryKey: ['folders'],
@@ -47,7 +50,7 @@ export const useGetAllFolders = () => {
     })
 }
 
-export const useGetFolderById = (id : number) => {
+export const useGetFolderById = (id : string) => {
     return useQuery({
         queryKey: ['folders', id],
         queryFn: () => fetchFolderById(id),
@@ -60,7 +63,7 @@ export const useCreateFolder = () =>{
     return useMutation({
         mutationFn: (folderData: FolderSchema) => createFolder(folderData as Folder),
 
-        onSettled: () => {
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['folders'] })
           }
     })
@@ -69,7 +72,7 @@ export const useCreateFolder = () =>{
 export const useDeleteFolder = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (id: number) => deleteFolder(id),
+        mutationFn: (id: string) => deleteFolder(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['folders'] })
           }

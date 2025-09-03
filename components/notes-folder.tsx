@@ -1,11 +1,9 @@
-'use client'
+"use client";
 
 import { useGetFolderById } from "@/hooks/use-folders";
 
-const NotesFolder = ({ folderId }: { folderId: number }) => {
- 
-  const {data: folderData} = useGetFolderById(folderId);
-  
+const NotesFolder = ({ folderId }: { folderId: string }) => {
+  const { data: folderData } = useGetFolderById(folderId);
 
   return (
     <div>

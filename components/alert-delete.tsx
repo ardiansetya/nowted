@@ -15,10 +15,10 @@ import { Button } from "./ui/button";
 import { useDeleteFolder } from "@/hooks/use-folders";
 import { Trash2Icon } from "lucide-react";
 
-const AlertDelete = ({ productId }: { productId: number }) => {
+const AlertDelete = ({ folderId }: { folderId: string }) => {
   const mutation = useDeleteFolder();
-  const handleDelete = (productId: number) => {
-    mutation.mutate(productId);
+  const handleDelete = (folderId: string) => {
+    mutation.mutate(folderId);
   };
   return (
     <AlertDialog>
@@ -38,7 +38,7 @@ const AlertDelete = ({ productId }: { productId: number }) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => handleDelete(productId)}
+            onClick={() => handleDelete(folderId)}
             className="bg-red-500 hover:bg-red-700 text-foreground">
             Delete
           </AlertDialogAction>
