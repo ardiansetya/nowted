@@ -129,7 +129,7 @@ export function AppSidebar() {
                 return (
                   <SidebarMenuItem key={folder.name}>
                     <SidebarMenuButton isActive={menuActive} asChild>
-                      <Link href={`${folder.name.toLocaleLowerCase()}`}>
+                      <Link href={`${folder.id}`}>
                         <Icon />
                         <span>{folder.name}</span>
                         <div className="ml-auto">

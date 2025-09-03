@@ -3,9 +3,9 @@ import { FolderSchema } from "@/lib/validation";
 import { Folder } from "@/types/folders";
 import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
- const useFolders = async () => {
+ const fetchAllFolders = async () => {
   try {
-    const response = await api.get("/folders");
+    const response = await api.get<Folder[]>("/folders");
     return response.data;
   } catch (error) {
     console.log(error);
@@ -30,10 +30,27 @@ const deleteFolder = async (id : number) => {
     }
 }
 
+const fetchFolderById = async (id : number) => {
+    try {
+        const response = await api.get<Folder>(`/folders/${id}`);
+        return response.data
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const useGetAllFolders = () => {
     return useQuery({
         queryKey: ['folders'],
-        queryFn: useFolders,
+        queryFn: fetchAllFolders,
+    })
+}
+
+export const useGetFolderById = (id : number) => {
+    return useQuery({
+        queryKey: ['folders', id],
+        queryFn: () => fetchFolderById(id),
     })
 }
 
