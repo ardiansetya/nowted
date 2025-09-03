@@ -19,7 +19,6 @@ import {
   Folder,
   FolderArchive,
   FolderOpen,
-  Plus,
   Search,
   StarIcon,
   Trash2Icon,
@@ -123,7 +122,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {foldersData?.map((folder: FolderType) => {
                 const menuActive =
-                  folder.name.toLocaleLowerCase() ===
+                  folder.id ===
                   pathnameEncoded.split("/")[1];
                 const Icon = menuActive ? FolderOpen : Folder;
                 return (
