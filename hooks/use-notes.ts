@@ -20,6 +20,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
         console.log(error);
     }
  }
+ 
+ export const fetchNotesById = async (folderId: string) => {
+    try {
+        const response = await api.get<Notes[]>(`/notes?folderId=${folderId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+ }
 
 
  export const createNote = async (payload: Notes) => {
@@ -48,5 +57,12 @@ export const useCreateNote = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['notes'] })
         }
+    })
+}
+
+export const useGetNotesById = (id : string) => {
+    return useQuery({
+        queryKey: ['notes', id],
+        queryFn: () => fetchNotesById(id),
     })
 }

@@ -1,14 +1,20 @@
 'use client'
 
 import { useGetNotesByFolderId } from '@/hooks/use-notes';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const NotesData = ({folderId}: {folderId: string}) => {
     const {data:dataNotes} = useGetNotesByFolderId(folderId);
+
+    const router = useRouter();
   return (
     <div className="flex flex-col gap-4">
       {dataNotes?.map((note) => (
         <div
+        onClick={ () => {
+          router.push(`/${folderId}/${note.id}`);
+        }}
           key={note.id}
           className="p-6 bg-accent hover:bg-accent/50 hover:transition-all rounded-xl">
           <h3 className="text-lg font-semibold capitalize">{note.title}</h3>
