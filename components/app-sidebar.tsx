@@ -120,7 +120,7 @@ export function AppSidebar() {
 
           <SidebarGroupContent>
             <SidebarMenu>
-              {foldersData?.map((folder: FolderType) => {
+              {foldersData?.folders?.map((folder: FolderType) => {
                 const menuActive =
                   folder.id ===
                   pathnameEncoded.split("/")[1];

@@ -5,7 +5,7 @@ import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
  const fetchAllFolders = async () => {
   try {
-    const response = await api.get<Folder[]>("/folders");
+    const response = await api.get("/folders");
     return response.data;
   } catch (error) {
     console.log(error);
