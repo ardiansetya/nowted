@@ -14,6 +14,7 @@ import {
   Star,
   Trash2,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 // Mock data untuk notes
@@ -168,8 +169,7 @@ const Home = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredNotes?.map((note: Notes) => (
-              <div
-                key={note.id}
+              <Link href={`/${note.folderId}/${note.id}`} key={note.id}
                 className="bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-all duration-200 cursor-pointer group hover:border-primary/20">
                 <div className="flex items-start justify-between mb-4">
                   <h3 className="font-semibold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
@@ -226,7 +226,7 @@ const Home = () => {
                     </span>
                   ))}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

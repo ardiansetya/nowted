@@ -14,16 +14,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
  }
  export const fetchNotesByFolderId = async (folderId: string) => {
     try {
-        const response = await api.get(`/notes?folderId=${folderId}`);
+        const response = await api.get(`/notes/folder/${folderId}`);
         return response.data;
     } catch (error) {
         console.log(error);
     }
  }
  
- export const fetchNotesById = async (folderId: string) => {
+ export const fetchNotesById = async (id: string) => {
     try {
-        const response = await api.get(`/notes?folderId=${folderId}`);
+        const response = await api.get(`/notes/${id}`);
         return response.data;
     } catch (error) {
         console.log(error);

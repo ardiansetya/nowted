@@ -5,9 +5,16 @@ import NotesFolder from "@/components/notes-folder";
 import { useGetFolderById } from "@/hooks/use-folders";
 import { useParams } from "next/navigation";
 
-const FolderPage = ({ params }: { params: { folderId: string } }) => {
-  const { folderId } = useParams();
-  console.log(folderId);
+const FolderPage = ({
+  params,
+  noteId,
+}: {
+  params: { folderId: string };
+  noteId: string;
+}) => {
+  const { folderId } = useParams() as { folderId: string };
+
+  console.log(noteId);
 
   // Type guard untuk memastikan folderId adalah string
   const folderIdString = Array.isArray(folderId) ? folderId[0] : folderId;
@@ -70,22 +77,14 @@ const FolderPage = ({ params }: { params: { folderId: string } }) => {
 
   return (
     <section className="flex">
-      <div className="w-1/4 bg-primary-foreground min-h-screen px-4">
+      <div
+        className={`${
+          noteId ? "w-full" : "w-1/4"
+        } bg-primary-foreground min-h-screen px-4`}>
         <div className="py-6">
           <NotesFolder folderId={folderIdString} />
         </div>
         <NotesData folderId={folderIdString} />
-      </div>
-
-      <div className="w-full bg-primary-foreground min-h-screen px-4 border-l py-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground mb-2">
-            {folder?.name || "Notes"}
-          </h1>
-        </div>
-
-        {/* Anda bisa menambahkan konten notes di sini */}
-        <div className="text-muted-foreground">Folder ID: {folderIdString}</div>
       </div>
     </section>
   );

@@ -91,7 +91,7 @@ const ModalAddNote = () => {
                           aria-expanded={openCombo}
                           className="w-[200px] justify-between">
                           {field.value
-                            ? folders?.find(
+                            ? folders?.folders.find(
                                 (folder: Folder) => folder.id === field.value
                               )?.name
                             : "Select Folder..."}
@@ -107,7 +107,7 @@ const ModalAddNote = () => {
                           <CommandList>
                             <CommandEmpty>No folder found.</CommandEmpty>
                             <CommandGroup>
-                              {folders?.map((folder: Folder) => (
+                              {folders?.folders.map((folder: Folder) => (
                                 <CommandItem
                                   key={folder.id}
                                   value={folder.id.toString()} 

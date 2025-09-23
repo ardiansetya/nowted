@@ -71,6 +71,8 @@ const mores = [
 export function AppSidebar() {
   const { data: foldersData } = useGetAllFolders();
 
+  console.log(foldersData);
+
 
   const pathname = usePathname();
   const pathnameEncoded = decodeURIComponent(pathname);
@@ -80,7 +82,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="px-4 py-3">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold">Nowted</h1>
+          <Link href={"/"} className="text-xl font-bold">Nowted</Link>
           <Button variant="ghost" size="icon">
             <Search />
           </Button>
@@ -128,7 +130,7 @@ export function AppSidebar() {
                 return (
                   <SidebarMenuItem key={folder.name}>
                     <SidebarMenuButton isActive={menuActive} asChild>
-                      <Link href={`${folder.id}`}>
+                      <Link href={`/${folder.id}`}>
                         <Icon />
                         <span>{folder.name}</span>
                         <div className="ml-auto">

@@ -32,7 +32,7 @@ const deleteFolder = async (id : string) => {
 
 const fetchFolderById = async (id : string) => {
     try {
-        const response = await api.get<Folder>(`/folders/${id}`);
+        const response = await api.get(`/folders/${id}`);
         return response.data
 
     } catch (error) {
