@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
  export const fetchAllNotes = async () => {
     try {
-        const response = await api.get<Notes[]>("/notes");
+        const response = await api.get("/notes");
         return response.data;
     } catch (error) {
         console.log(error);
@@ -14,7 +14,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
  }
  export const fetchNotesByFolderId = async (folderId: string) => {
     try {
-        const response = await api.get<Notes[]>(`/notes?folderId=${folderId}`);
+        const response = await api.get(`/notes?folderId=${folderId}`);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -23,7 +23,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
  
  export const fetchNotesById = async (folderId: string) => {
     try {
-        const response = await api.get<Notes[]>(`/notes?folderId=${folderId}`);
+        const response = await api.get(`/notes?folderId=${folderId}`);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -40,8 +40,35 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
     }
  }
 
+ export const deleteNote = async (id: string) => {
+    try {
+        const response = await api.delete(`/notes/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+ }
+
+ export const updateStarNote = async (id: string, isStarred: boolean) => {
+    try {
+        const response = await api.patch(`/notes/${id}`, { isStarred });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+ }
+
 
 //  TANSTACK QUERY
+
+export const useGetAllNotes = () => {
+    return useQuery({
+        queryKey: ['notes'],
+        queryFn: fetchAllNotes,
+    })
+}
+
+
  export const useGetNotesByFolderId = (folderId: string) => {
     return useQuery({
         queryKey: ['notes', folderId],
@@ -65,4 +92,16 @@ export const useGetNotesById = (id : string) => {
         queryKey: ['notes', id],
         queryFn: () => fetchNotesById(id),
     })
+}
+
+export const useUpdateStarNote = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: ({ id, isStarred }: { id: string; isStarred: boolean }) => {
+        return updateStarNote(id, isStarred);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["notes"] });
+      },
+    });
 }

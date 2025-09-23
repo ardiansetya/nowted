@@ -21,6 +21,7 @@ import { useCreateNote } from "@/hooks/use-notes";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command";
 import { cn } from "@/lib/utils";
+import { Folder } from "@/types/folders";
 
 const ModalAddNote = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -91,7 +92,7 @@ const ModalAddNote = () => {
                           className="w-[200px] justify-between">
                           {field.value
                             ? folders?.find(
-                                (folder) => folder.id === field.value
+                                (folder: Folder) => folder.id === field.value
                               )?.name
                             : "Select Folder..."}
                           <ChevronsUpDown className="opacity-50" />
@@ -106,7 +107,7 @@ const ModalAddNote = () => {
                           <CommandList>
                             <CommandEmpty>No folder found.</CommandEmpty>
                             <CommandGroup>
-                              {folders?.map((folder) => (
+                              {folders?.map((folder: Folder) => (
                                 <CommandItem
                                   key={folder.id}
                                   value={folder.id.toString()} 
